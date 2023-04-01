@@ -1,0 +1,19 @@
+{
+  "name": "dolya",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node src/bin/dolya.js тести/*.тест"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "glob": "^8.1.0",
+    "glob-promise": "^6.0.2",
+    "mavka": "^0.10.18"
+  }
+}
