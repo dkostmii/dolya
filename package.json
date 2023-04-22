@@ -28,10 +28,11 @@
   "license": "GPL-3.0",
   "type": "module",
   "bin": {
-    "dolya": "node src/bin/dolya.js",
-    "доля": "node src/bin/dolya.js"
+    "dolya": "src/bin/dolya.js",
+    "доля": "src/bin/dolya.js"
   },
   "scripts": {
+    "start": "node src/bin/dolya.js",
     "test": "node src/bin/dolya.js тести/*.тест"
   },
   "dependencies": {
