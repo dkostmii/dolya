@@ -2,6 +2,30 @@
   "name": "dolya",
   "version": "0.0.1",
   "description": "Середовище тестування для Мавки",
+  "homepage": "https://github.com/dkostmii/dolya#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dkostmii/dolya.git"
+  },
+  "bugs": {
+    "email": "dmitrokostelny95@gmail.com",
+    "url": "https://github.com/dkostmii/dolya/issues"
+  },
+  "keywords": [
+    "mavka",
+    "language",
+    "testing",
+    "tests",
+    "мавка",
+    "мова програмування",
+    "тестування",
+    "тести"
+  ],
+  "author": {
+    "name": "Dmytro-Andrii Kostelnyi",
+    "email": "dmitrokostelny95@gmail.com"
+  },
+  "license": "GPL-3.0",
   "type": "module",
   "bin": {
     "dolya": "node src/bin/dolya.js",
@@ -10,9 +34,6 @@
   "scripts": {
     "test": "node src/bin/dolya.js тести/*.тест"
   },
-  "keywords": [],
-  "author": "Dmytro-Andrii Kostelnyi",
-  "license": "ISC",
   "dependencies": {
     "@kant2002/prompt-sync": "^4.2.0",
     "chalk": "^5.2.0",
