@@ -1,6 +1,12 @@
 import { testGoodValue, testBadValue } from "./consoleThemes.js";
 
-function buildTestFailMsg({ title, titleInverse, expectedValue, actualValue, inverse = false }) {
+function buildTestFailMsg({
+  title,
+  titleInverse,
+  expectedValue,
+  actualValue,
+  inverse = false,
+}) {
   let message = inverse ? titleInverse : title;
 
   message += "\n";

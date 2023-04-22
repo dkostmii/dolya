@@ -2,23 +2,32 @@ import { doTestFailure } from "../fail.js";
 
 import {
   buildListContainsElHelperFn,
-  buildListEquivalentToListHelperFn
+  buildListEquivalentToListHelperFn,
 } from "./helper.js";
 
 export function buildHasLengthFn(mavka, factObj) {
   return mavka.makeProxyFunction((args, context) => {
     if (!mavka.isNumber(args[0])) {
-      mavka.fall(context, mavka.makeText("Очікується, що у має_довжину() передано число."));
+      mavka.fall(
+        context,
+        mavka.makeText("Очікується, що у має_довжину() передано число.")
+      );
     }
 
-    factObj["значення"] = factObj["значення"].get(context, "довжина").doCall(context);
+    factObj["значення"] = factObj["значення"]
+      .get(context, "довжина")
+      .doCall(context);
 
     const inverse = factObj["навпаки"].asJsValue();
 
-    const expectedValue = factObj["значення"].asText(context).asJsValue(context);
+    const expectedValue = factObj["значення"]
+      .asText(context)
+      .asJsValue(context);
     const actualValue = args[0].asText(context).asJsValue(context);
 
-    let fails = factObj["значення"].doCompareNotEquals(context, args[0]).asJsValue();
+    let fails = factObj["значення"]
+      .doCompareNotEquals(context, args[0])
+      .asJsValue();
 
     fails = inverse ? !fails : fails;
 
@@ -39,16 +48,22 @@ export function buildHasLengthFn(mavka, factObj) {
 export function buildContainsElFn(mavka, factObj) {
   return mavka.makeProxyFunction((args, context) => {
     if (args.length === 0) {
-      mavka.fall(context, mavka.makeText("Очікується, що у містить_елемент() передано параметр."));
+      mavka.fall(
+        context,
+        mavka.makeText("Очікується, що у містить_елемент() передано параметр.")
+      );
     }
 
     const inverse = factObj["навпаки"].asJsValue(context);
 
     const containsElHelperFn = buildListContainsElHelperFn(mavka);
-    
+
     const elementValue = args[0].asText(context).asJsValue(context);
 
-    const containsResult = containsElHelperFn.doCall(context, [factObj["значення"], args[0]]);
+    const containsResult = containsElHelperFn.doCall(context, [
+      factObj["значення"],
+      args[0],
+    ]);
 
     let fails = !containsResult.asJsValue(context);
     fails = inverse ? !fails : fails;
@@ -70,7 +85,12 @@ export function buildContainsElFn(mavka, factObj) {
 export function buildEquivalentToListFn(mavka, factObj) {
   return mavka.makeProxyFunction((args, context) => {
     if (!mavka.isList(args[0])) {
-      mavka.fall(context, mavka.makeText("Очікується, що у еквівалентний_списку() передано список, що очікується."));
+      mavka.fall(
+        context,
+        mavka.makeText(
+          "Очікується, що у еквівалентний_списку() передано список, що очікується."
+        )
+      );
     }
 
     const expectedValue = args[0].asText(context).asJsValue(context);
@@ -78,7 +98,10 @@ export function buildEquivalentToListFn(mavka, factObj) {
 
     const listsEquivalentHelperFn = buildListEquivalentToListHelperFn(mavka);
 
-    const areEquivalent = listsEquivalentHelperFn.doCall(context, [factObj["значення"], args[0]]);
+    const areEquivalent = listsEquivalentHelperFn.doCall(context, [
+      factObj["значення"],
+      args[0],
+    ]);
 
     const inverse = factObj["навпаки"].asJsValue(context);
 

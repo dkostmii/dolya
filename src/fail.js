@@ -5,7 +5,10 @@ export function buildFailFn(mavka) {
     const message = Array.isArray(args) ? args[0] : args;
 
     if (!mavka.isText(message)) {
-      mavka.fall(context, mavka.makeText("Очікується, що перший параметр є текст."));
+      mavka.fall(
+        context,
+        mavka.makeText("Очікується, що перший параметр є текст.")
+      );
     }
 
     mavka.fall(context, message);

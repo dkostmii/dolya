@@ -5,7 +5,10 @@ export function buildFallFn(mavka, factObj) {
     const testedDiia = factObj["значення"];
 
     if (!mavka.isDiia(testedDiia)) {
-      mavka.fall(context, mavka.makeText("Очікується, що параметр припустити() є Дією."));
+      mavka.fall(
+        context,
+        mavka.makeText("Очікується, що параметр припустити() є Дією.")
+      );
     }
 
     const inverse = factObj["навпаки"].asJsValue();
@@ -26,7 +29,7 @@ export function buildFallFn(mavka, factObj) {
     if (inverse) {
       expectedValue = actualValue;
     }
-    
+
     let testMetadata = {
       title: "Очікується, що Дія падає",
       titleInverse: "Очікується, що Дія не падає",

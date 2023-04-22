@@ -2,19 +2,16 @@ import {
   buildCompFn,
   buildFactNegationFn,
   buildIsEmptyFn,
-  buildIsTrueFn
+  buildIsTrueFn,
 } from "./primitive.js";
 
-import {
-  buildFallFn
-} from './fall.js';
+import { buildFallFn } from "./fall.js";
 
 import {
   buildHasLengthFn,
   buildContainsElFn,
-  buildEquivalentToListFn
-} from './list.js';
-
+  buildEquivalentToListFn,
+} from "./list.js";
 
 function buildFactObj(mavka, factObj) {
   factObj["не_"] = buildFactNegationFn(mavka, factObj);

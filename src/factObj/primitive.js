@@ -3,7 +3,7 @@ import { doTestFailure } from "../fail.js";
 export function buildFactNegationFn(mavka, factObj) {
   return mavka.makeProxyFunction(() => {
     factObj["навпаки"] = factObj["навпаки"].asJsValue() ? mavka.no : mavka.yes;
-    
+
     return mavka.makePortal(factObj);
   });
 }
@@ -11,7 +11,10 @@ export function buildFactNegationFn(mavka, factObj) {
 export function buildCompFn(mavka, factObj) {
   return mavka.makeProxyFunction((args, context) => {
     if (args.length !== 1) {
-      mavka.fall(context, mavka.makeText("Очікується, що у дорівнює() передано один параметр."));
+      mavka.fall(
+        context,
+        mavka.makeText("Очікується, що у дорівнює() передано один параметр.")
+      );
     }
 
     let testMetadata = {
@@ -22,7 +25,9 @@ export function buildCompFn(mavka, factObj) {
       inverse: factObj["навпаки"].asJsValue(),
     };
 
-    let fails = factObj["значення"].doCompareNotEquals(context, args[0]).asJsValue();
+    let fails = factObj["значення"]
+      .doCompareNotEquals(context, args[0])
+      .asJsValue();
     fails = testMetadata.inverse ? !fails : fails;
 
     if (fails) {
@@ -60,7 +65,9 @@ export function buildIsTrueFn(mavka, factObj) {
       inverse: factObj["навпаки"].asJsValue(),
     };
 
-    let fails = factObj["значення"].doCompareNotEquals(context, mavka.yes).asJsValue();
+    let fails = factObj["значення"]
+      .doCompareNotEquals(context, mavka.yes)
+      .asJsValue();
     fails = testMetadata.inverse ? !fails : fails;
 
     if (fails) {
