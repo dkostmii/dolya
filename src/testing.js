@@ -11,35 +11,37 @@ function buildTestingContext(mavka) {
   context.set(
     "тестовий_випадок",
     mavka.makeProxyFunction((args, context) => {
-      if (!mavka.isText(args[0])) {
-        mavka.fall(
-          context,
-          mavka.makeText("Очікується, що перший параметр є текст.")
-        );
+      let testName, testScenario;
+
+      if (Array.isArray(args)) {
+        testName = args[0];
+        testScenario = args[1];
+      } else {
+        testName = args["назва"];
+        testScenario = args["сценарій"];
       }
 
-      if (!mavka.isDiia(args[1])) {
-        mavka.fall(
-          context,
-          mavka.makeText("Очікується, що другий параметр є Дія.")
-        );
+      if (typeof testName === "undefined" || !mavka.isText(testName)) {
+        mavka.fall(context, mavka.makeText('Очікується, що "назва" є текст.'));
+      }
+
+      if (typeof testScenario === "undefined" || !mavka.isDiia(testScenario)) {
+        mavka.fall(context, mavka.makeText('Очікується, що "сценарій" є Дія.'));
       }
 
       buildExpectContext(mavka, context);
 
-      const scenarioFn = args[1];
-
       try {
-        scenarioFn.doCall(context);
+        testScenario.doCall(context);
         console.log(
           testPassStyle("✔ успішно"),
-          testTitleStyle(args[0].asJsValue()) + "\n"
+          testTitleStyle(testName.asJsValue()) + "\n"
         );
       } catch (e) {
         if (e instanceof mavka.ThrowValue) {
           console.error(
             testFailStyle("✖ провалено"),
-            testTitleStyle(args[0].asJsValue(context))
+            testTitleStyle(testName.asJsValue(context))
           );
           console.error(e.value.asText(context).asJsValue(context) + "\n");
         } else {

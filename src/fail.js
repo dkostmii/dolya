@@ -2,12 +2,18 @@ import buildTestFailMsg from "./output/testFailMsg.js";
 
 export function buildFailFn(mavka) {
   return mavka.makeProxyFunction((args, context) => {
-    const message = Array.isArray(args) ? args[0] : args;
+    let message;
 
-    if (!mavka.isText(message)) {
+    if (Array.isArray(args)) {
+      message = args[0];
+    } else {
+      message = args["повідомлення"];
+    }
+
+    if (typeof message === "undefined" || !mavka.isText(message)) {
       mavka.fall(
         context,
-        mavka.makeText("Очікується, що перший параметр є текст.")
+        mavka.makeText('Очікується, що "повідомлення" є текст.')
       );
     }
 
@@ -18,5 +24,5 @@ export function buildFailFn(mavka) {
 export function doTestFailure(testMetadata, factObj, context, mavka) {
   const fallMsg = buildTestFailMsg(testMetadata);
 
-  factObj["провалити"].doCall(context, mavka.makeText(fallMsg));
+  factObj["провалити"].doCall(context, [mavka.makeText(fallMsg)]);
 }

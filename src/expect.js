@@ -7,8 +7,16 @@ function buildExpectContext(mavka, testCaseContext) {
   testCaseContext.set(
     "припустити",
     mavka.makeProxyFunction((args) => {
+      let value;
+
+      if (Array.isArray(args)) {
+        value = args[0];
+      } else {
+        value = args["значення"];
+      }
+
       let factObj = {
-        значення: args[0],
+        значення: value,
         навпаки: mavka.no,
         провалити: buildFailFn(mavka),
       };
@@ -24,6 +32,10 @@ function buildExpectContext(mavka, testCaseContext) {
   testCaseContext.set(
     "друк",
     mavka.makeProxyFunction((args, context) => {
+      if (!Array.isArray(args)) {
+        args = Object.values(args);
+      }
+
       console.log(
         testTitleStyle("Тестовий випадок виводить:"),
         ...args.map((arg) => {

@@ -1,36 +1,52 @@
 export function buildListContainsElHelperFn(mavka) {
   return mavka.makeProxyFunction((args, context) => {
-    if (!mavka.isList(args[0])) {
+    let list, searchItem;
+
+    if (Array.isArray(args)) {
+      list = args[0];
+      searchItem = args[1];
+    } else {
+      list = args["послідовність"];
+      searchItem = args["елемент"];
+    }
+
+    if (!mavka.isList(list)) {
       mavka.fall(
         context,
         mavka.makeText(
-          "Очікується, що у м_ел() передано список та шуканий елемент."
+          'Очікується, що у параметрі "послідовність" Дії м_ел() передано список.'
         )
       );
     }
 
-    if (args.length !== 2) {
+    if (mavka.isUndefined(searchItem)) {
       mavka.fall(
         context,
         mavka.makeText(
-          "Очікується, що у м_ел() передано список та шуканий елемент."
+          'Очікується, що у Дію м_ел() передано параметр "елемент".'
         )
       );
     }
-
-    const [list, searchItem] = args;
 
     const predFn = mavka.makeProxyFunction((args, predFnContext) => {
-      if (args.length !== 1) {
+      let listEl;
+
+      if (Array.isArray(args)) {
+        listEl = args[0];
+      } else {
+        listEl = args["ел"];
+      }
+
+      if (mavka.isUndefined(listEl)) {
         mavka.fall(
           predFnContext,
           mavka.makeText(
-            "Очікується, у функцію перевірки передано елемент списку."
+            'Очікується, що у функцію перевірки передано параметр "ел".'
           )
         );
       }
 
-      return searchItem.doCompareEquals(predFnContext, args[0]);
+      return searchItem.doCompareEquals(predFnContext, listEl);
     });
 
     return list
@@ -42,14 +58,35 @@ export function buildListContainsElHelperFn(mavka) {
 
 export function buildListEquivalentToListHelperFn(mavka) {
   return mavka.makeProxyFunction((args, context) => {
-    if (!(mavka.isList(args[0]) && mavka.isList(args[1]))) {
+    let factList, expectedList;
+
+    if (Array.isArray(args)) {
+      factList = args[0];
+      expectedList = args[0];
+    } else {
+      factList = args["фактичний"];
+      expectedList = args["очікуваний"];
+    }
+
+    if (!mavka.isList(factList)) {
       mavka.fall(
         context,
         mavka.makeText(
-          "Очікується, що у сп_екв() передано фактичний та очікуваний списки."
+          'Очікується, що у параметрі "фактичний" Дії сп_екв() передано список.'
         )
       );
     }
+
+    if (!mavka.isList(expectedList)) {
+      mavka.fall(
+        context,
+        mavka.makeText(
+          'Очікується, що у параметрі "очікуваний" Дії сп_екв() передано список.'
+        )
+      );
+    }
+
+    args = [factList, expectedList];
 
     const lengths = args
       .slice(0, 2)

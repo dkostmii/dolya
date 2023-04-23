@@ -7,7 +7,9 @@ export function buildFallFn(mavka, factObj) {
     if (!mavka.isDiia(testedDiia)) {
       mavka.fall(
         context,
-        mavka.makeText("Очікується, що параметр припустити() є Дією.")
+        mavka.makeText(
+          "Очікується, що значення передане у дію припустити() є Дією."
+        )
       );
     }
 

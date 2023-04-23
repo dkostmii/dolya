@@ -10,23 +10,33 @@ export function buildFactNegationFn(mavka, factObj) {
 
 export function buildCompFn(mavka, factObj) {
   return mavka.makeProxyFunction((args, context) => {
-    if (args.length !== 1) {
+    let expected;
+
+    if (Array.isArray(args)) {
+      expected = args[0];
+    } else {
+      expected = args["очікуване_значення"];
+    }
+
+    if (typeof expected === "undefined" || mavka.isUndefined(expected)) {
       mavka.fall(
         context,
-        mavka.makeText("Очікується, що у дорівнює() передано один параметр.")
+        mavka.makeText(
+          'Очікується, що у Дію дорівнює() передано параметр "очікуване_значення".'
+        )
       );
     }
 
     let testMetadata = {
       title: "Очікується, що обʼєкти рівні.",
       titleInverse: "Очікується, що обʼєкти не є рівні.",
-      expectedValue: args[0].asText(context).asJsValue(context),
+      expectedValue: expected.asText(context).asJsValue(context),
       actualValue: factObj["значення"].asText(context).asJsValue(context),
       inverse: factObj["навпаки"].asJsValue(),
     };
 
     let fails = factObj["значення"]
-      .doCompareNotEquals(context, args[0])
+      .doCompareNotEquals(context, expected)
       .asJsValue();
     fails = testMetadata.inverse ? !fails : fails;
 
