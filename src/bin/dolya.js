@@ -67,11 +67,11 @@ function buildExternal() {
 
 // Command handling
 if (!command) {
-  command = `*.тест.м`; // If command is not given, use доля *.тест.м to launch all test files
+  command = "*.тест.м"; // If command is not given, use доля *.тест.м to launch all test files
 } else if (command.toLowerCase() === "версія") {
   console.log(version);
   process.exit();
-} else if (command.toLowerCase() === "допомога" || !command) {
+} else if (command.toLowerCase() === "допомога") {
   console.log(
     `
 Використання:
