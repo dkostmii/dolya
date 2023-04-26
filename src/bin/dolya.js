@@ -66,17 +66,21 @@ function buildExternal() {
 }
 
 // Command handling
-if (command.toLowerCase() === "версія") {
+if (!command) {
+  command = "*.тест.м"; // If command is not given, use доля *.тест.м to launch all test files
+} else if (command.toLowerCase() === "версія") {
   console.log(version);
   process.exit();
-} else if (command.toLowerCase() === "допомога" || !command) {
+} else if (command.toLowerCase() === "допомога") {
   console.log(
     `
 Використання:
+  доля
   доля <візерунок>
   доля <команда>
 
 Доступні команди:
+  доля - запускає Долю з візерунком *.тест.м
   доля <візерунок> - шукає усі файли за візерунком GLOB (файли повинні мати закінчення .м)
   доля версія - друкує версію Долі
   доля допомога - друкує це повідомлення
@@ -86,6 +90,9 @@ if (command.toLowerCase() === "версія") {
   крім цього, використовуються наступні позначення:
     * - будь-який знак, крім "/"
     ** - будь-який знак, включно з "/" (для рекурсивного сканування)
+
+    Розширення файлу .м у візерунку є необовʼязковим.
+    Усі візерунки вимагають розширення файлу .м
   `.trim()
   );
   process.exit();
