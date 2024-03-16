@@ -7,7 +7,7 @@
 ## Оновлення
 
 Долю було оновлено для роботи з
-[МаМою](https://github.com/mavka-ukr/mavka).
+[МаМою](https://github.com/mavka-ukr/mavka) та [Джеджаликом](https://github.com/mavka-ukr/jejalyk).
 Тепер вона реалізована у вигляді паку Мавки.
 
 ## Використання
